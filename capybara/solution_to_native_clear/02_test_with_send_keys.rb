@@ -1,7 +1,4 @@
 require 'capybara'
-require 'selenium-webdriver'
-require 'rspec'
-require 'benchmark'
 
 Capybara.register_driver :firefox do |app|
   Capybara::Selenium::Driver.new(app, :browser => :firefox)
@@ -9,7 +6,7 @@ end
 
 Capybara.default_max_wait_time = 15
 $browser = Capybara::Session.new(:firefox)
-$browser.visit("https://www.w3schools.com/code/tryit.asp?filename=GASYGYS570YC")
+$browser.visit("https://www.w3schools.com/code/tryit.asp?filename=GASWGTGYEHKK")
 
 def problema_do_clean
 
