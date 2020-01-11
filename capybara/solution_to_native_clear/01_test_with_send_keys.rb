@@ -19,9 +19,7 @@ def problema_do_clean
     begin
       element01 = $browser.find('input[name="fname"]', :visible => true)
       element02 = $browser.find('input[name="lname"]', :visible => true)
-      element01.native.clear
       element01.send_keys "test 1"
-      element02.native.clear
       element02.send_keys "test 2"
     rescue => ex
         print ex
