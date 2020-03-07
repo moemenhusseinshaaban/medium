@@ -7,9 +7,9 @@ end
 
 $browser = Capybara::Session.new(:chrome); Capybara.default_max_wait_time = 20
 $browser.visit('https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onmouseover')
-$browser.driver.browser.switch_to.frame ("iframeResult")
+$browser.driver.browser.switch_to.frame("iframeResult")
 
-def trigger_event(elem, evento)
+def jquery(elem, evento)
   dir_atual = File.expand_path File.dirname(__FILE__) # pega o caminho do arquivo
   js = File.read("#{dir_atual}/jquery.min.js") # ler o arquivo jquery
   $browser.execute_script(js)
@@ -17,6 +17,6 @@ def trigger_event(elem, evento)
 end
 
 elem = $browser.find("img[onmouseover*=bigImg]")
-trigger_event(elem, "mouseover")
+jquery(elem, "mouseover")
 
 sleep 10 # somente para ver o elemento sumindo.
