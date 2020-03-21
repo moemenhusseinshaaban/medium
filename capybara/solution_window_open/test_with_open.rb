@@ -34,9 +34,11 @@ class TestWindows
     }
     # uso a segunda tela e dou um click
     page.within_window $janelaq do
-      print page.has_css? "a[href='/html/tryit.asp?filename=tryhtml_default']"
+      print "Segunda tela usando: #{page.has_text? "LEARN HTML"}"
       page.find("a[href='/html/tryit.asp?filename=tryhtml_default']", visible: true).click
     end
+    page.switch_to_window page.windows.last
+    page.execute_script('window.close()')
     page.switch_to_window page.windows.first
   end
 end
