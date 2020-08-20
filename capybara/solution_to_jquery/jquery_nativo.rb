@@ -5,6 +5,9 @@ module CapybaraExtension
   def jquery(event)
     base.jquery(event)
   end
+  def highlight(color="yellow")
+    base.highlight(color)
+  end
 end
 
 module CapybaraSeleniumExtension
@@ -13,6 +16,12 @@ module CapybaraSeleniumExtension
     js = File.read("#{dir_atual}/jquery.min.js") # ler o arquivo jquery
     driver.execute_script(js)
     driver.execute_script("$(arguments[0]).trigger(\"#{evento}\")", native)
+  end
+  def highlight(color)
+    dir_atual = File.expand_path File.dirname(__FILE__) # pega o caminho do arquivo
+    js = File.read("#{dir_atual}/jquery.min.js") # ler o arquivo jquery
+    driver.execute_script(js)
+    driver.execute_script("$(arguments[0]).css({'border':'5px solid #{color}'});", native)
   end
 end
 
@@ -29,7 +38,7 @@ $browser.visit('https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_onmo
 
 # mudo o frame que esta focado na tela, para o frame que desejo usar
 $browser.within_frame(0){
-  $browser.find("img[onmouseover*=bigImg]").jquery("mouseover") # funcao jquery na mesma linha do find do capybara
+  $browser.find("img[onmouseover*=bigImg]").highlight # funcao jquery na mesma linha do find do capybara
 }
 
-sleep 15 # mostrar o mouse sobre o elemento
+sleep 25 # mostrar o mouse sobre o elemento
