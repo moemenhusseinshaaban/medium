@@ -28,14 +28,30 @@ class TestWindows
   def problem_window
     # esta dentro do primeiro frame, e retorna a instancia da segunda tela
     page.within_frame('iframeResult', :visible => true) {
-      $janelaq = page.window_opened_by do
+      $primeira_janela = page.current_window
+      $segunda_janela = page.window_opened_by do
         page.find('button[onclick*=myFunction]', :visible => true).click
       end
     }
     # uso a segunda tela e dou um click
-    page.within_window $janelaq do
-      print "Segunda tela usando: #{page.has_text? "LEARN HTML"}"
+    page.within_window $segunda_janela do
+      puts "Segunda tela usando: #{page.has_text? "LEARN HTML"}"
+      # abre uma terceira janela
       page.find("a[href='/html/tryit.asp?filename=tryhtml_default']", visible: true).click
+    end
+    until_window(3)
+    puts "Fecha a terceira janela" # sem o contador iria gerar erro
+    page.switch_to_window page.windows.last
+    page.windows.last.close # fecha a terceira janela
+    page.switch_to_window $primeira_janela
+  end
+
+  def until_window(x, count_value = 4)
+    count = 0
+    until count > count_value
+      puts page.windows.count
+      break if page.windows.count == x
+      sleep 1; count += 1
     end
   end
 end
