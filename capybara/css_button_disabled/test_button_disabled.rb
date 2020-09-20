@@ -22,6 +22,10 @@ end
 
 class VerificaAtributo
 
+  ###
+  # https://rubydoc.info/github/jnicklas/capybara/master/Capybara/Node/Element
+  # disabled?
+
   include Capybara::DSL
 
   # o visit vai ficar no step definition, uma adaptacao aqui
