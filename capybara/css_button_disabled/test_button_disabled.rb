@@ -1,5 +1,6 @@
 require 'capybara'
 require 'capybara/dsl'
+require 'rspec'
 
 # Configuracao que vai ficar no env.rb
 Capybara.register_driver :firefox do |app|
@@ -27,6 +28,7 @@ class VerificaAtributo
   # disabled?
 
   include Capybara::DSL
+  include RSpec::Matchers
 
   # o visit vai ficar no step definition, uma adaptacao aqui
   def load_page
@@ -37,12 +39,20 @@ class VerificaAtributo
     # esta dentro do primeiro frame, e retorna a instancia da segunda tela
     page.find('button',text: "Run »").click
     page.within_frame('iframeResult', :visible => true) {
+
         button = page.find('button[type="button"][id="12345"]', :visible => true)
         if button.disabled?
-          fail('O botão está desabilitado')
+          puts "O botão está desabilitado"
         else
           puts "Botão Habilitado!"
         end
+
+        # Sem precisa usar o find, posso usar o has_css? ou has_select? para validar o disabled no meu assert.
+        p has_css = page.has_css?('button[type="button"][id="12345"][disabled]')
+        expect(has_css).to be_truthy, "Esperado encontrar o elemento! Resultado: #{has_css.inspect}"
+
+        p has_selector = page.has_selector?('button[type="button"][id="12345"][disabled]')
+        expect(has_selector).to be_falsey, "Esperado Não encontrar o elemento! Resultado: #{has_selector.inspect}"
     }
   end
 end
